@@ -109,6 +109,8 @@
     "thread": "cpp",
     "typeinfo": "cpp",
     "set": "cpp",
-    "cstring": "cpp"
+    "cstring": "cpp",
+    "fstream": "cpp",
+    "sstream": "cpp"
   }
 }

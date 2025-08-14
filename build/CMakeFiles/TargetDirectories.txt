@@ -1,3 +1,2 @@
-/home/orangepi/Documents/YoloV8_rknn/build/CMakeFiles/yolo8.dir
-/home/orangepi/Documents/YoloV8_rknn/build/CMakeFiles/edit_cache.dir
-/home/orangepi/Documents/YoloV8_rknn/build/CMakeFiles/rebuild_cache.dir
+E:/ImportantData/Mainjob/System_Linux_Debian/File_In_Linux/YoloV8_rknn/build/CMakeFiles/edit_cache.dir
+E:/ImportantData/Mainjob/System_Linux_Debian/File_In_Linux/YoloV8_rknn/build/CMakeFiles/rebuild_cache.dir
