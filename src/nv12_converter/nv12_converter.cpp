@@ -1,12 +1,4 @@
 #include "nv12_converter.h"
-#include <sys/mman.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <errno.h>
-#include <linux/dma-buf.h>
-#include <linux/dma-heap.h>
-#include <sys/ioctl.h>
-#include <chrono>
 
 //==================== CONSTRUCTOR & DESTRUCTOR ====================//
 NV12Converter::NV12Converter() : rga_initialized_(false) {

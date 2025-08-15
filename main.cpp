@@ -5,7 +5,6 @@
 #include <vector>
 
 #include <rtspProcess/mpp_rtspProcess.h>
-// #include <rtspProcess/openGL_rtspProcess.h>
 #include <nv12_converter/nv12_converter.h>
 
 // Biến toàn cục
@@ -55,58 +54,11 @@ bool initRTSP_Process(const std::string& rtsp_url) {
             } else {
                 std::cerr << "[ERROR] Chuyển đổi NV12→RGB downscaled thất bại!" << std::endl;
             }
-            
-            // Backup: Option 1b - Full resolution (uncomment nếu cần full resolution)
-            /*
-            if (converter->convertDMABufToRGB(dma_fd, width, height, &rgb_data, &rgb_size)) {
-                std::cout << "[SUCCESS] Converted to RGB! Size: " << rgb_size << " bytes" << std::endl;
-                delete[] rgb_data;
-            }
-            */
-            
-            // Option 2: Zero-copy conversion (uncomment nếu cần)
-            /*
-            int rgb_dma_fd = converter->allocateRGBDMABuf(width, height);
-            if (rgb_dma_fd > 0) {
-                if (converter->convertDMABufToDMABuf(dma_fd, rgb_dma_fd, width, height)) {
-                    std::cout << "[SUCCESS] Zero-copy NV12→RGB DMABuf conversion!" << std::endl;
-                    // TODO: Sử dụng rgb_dma_fd cho processing tiếp
-                }
-                converter->freeDMABuf(rgb_dma_fd);
-            }
-            */
         }
-        
-        // Đẩy frame vào OpenGL viewer để hiển thị (không copy CPU)
-        // glViewer.pushFrame(dma_fd, width, height);
-    });
-    
+    }
+);
     return true;
 }
-
-//==================== INIT RTSP UPLOAD ====================//
-// ⚠️⚠️⚠️ TODO: ĐANG TẠM ẨN UPLOAD RTSP - ENABLE LẠI KHI CẦN ⚠️⚠️⚠️
-/*
-bool initRTSP_Upload(const std::string& upload_url, int width, int height, int framerate) {
-    if (!reader) {
-        std::cerr << "[ERROR] RTSP reader chưa được khởi tạo!" << std::endl;
-        return false;
-    }
-
-    if (!reader->init_pipeline_upload(upload_url, width, height, framerate)) {
-        std::cerr << "[ERROR] Không thể khởi tạo pipeline upload RTSP!" << std::endl;
-        return false;
-    }
-
-    reader->setUploadCallback([&](int dma_fd, int width, int height) {
-        // Đẩy frame vào pipeline upload
-        reader->push_frame_to_upload(dma_fd, width, height);
-    });
-
-    std::cout << "[INFO] Đã khởi tạo pipeline upload RTSP." << std::endl;
-    return true;
-}
-*/
 
 //==================== MAIN LOOP ====================//
 void mainLoop() {
@@ -136,12 +88,6 @@ void mainLoop() {
 int main() {
     std::string rtsp_url = "rtsp://user03:abcd1234@113.177.126.32:8153";
     if (!initRTSP_Process(rtsp_url)) return -1;
-
-    
-    // ⚠️⚠️⚠️ TODO: TẠM ẨN UPLOAD INIT - ENABLE LẠI KHI CẦN ⚠️⚠️⚠️
-    // Ví dụ khởi tạo pipeline upload RTSP (URL gốc để test)
-    // std::string upload_url= "rtsp://103.147.186.216:20990/livestream/00_11_22_33_44/index.rtsp?username=1124a9a7183d0257842986fe3e83fc21&time=UTC&key=&token=";
-    // initRTSP_Upload(upload_url, 1600, 1200, 25);  // Giữ nguyên resolution input
 
     mainLoop();
 

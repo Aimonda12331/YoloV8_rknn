@@ -4,6 +4,14 @@
 #include <iostream>
 #include <memory>
 #include <cstring>
+#include <sys/mman.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <errno.h>
+#include <linux/dma-buf.h>
+#include <linux/dma-heap.h>
+#include <sys/ioctl.h>
+#include <chrono>
 
 // RGA Headers - sử dụng RGA v1 API cho hardware acceleration
 extern "C" {

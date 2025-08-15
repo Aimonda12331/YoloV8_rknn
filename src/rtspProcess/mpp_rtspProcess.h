@@ -1,23 +1,21 @@
 #ifndef MPP_RTSP_READER_H
 #define MPP_RTSP_READER_H
 
-#include <iostream>
+#include <iostream>               // Dùng cho std::cout và std::cerr
 #include <string.h>
 #include <chrono>
 #include <functional>
+#include <cstring>
 
 #include <gst/gst.h>
+#include <gst/app/gstappsrc.h>
 #include <gst/app/gstappsink.h>
 #include <gst/allocators/allocators.h>
 #include <gst/allocators/gstdmabuf.h>
 
-
 class rtsp_reader{
     public:
         using FrameCallback = std::function<void(int dma_fd, int width, int height)>;
-        
-        // ⚠️ TODO: TẠM ẨN UPLOAD CALLBACK TYPE - ENABLE LẠI KHI CẦN ⚠️
-        // using UploadCallback = std::function<void(int dma_fd, int width, int height)>;
 
         explicit rtsp_reader(const std::string& url); //hàm khởi tạo nhận url rtsp
         ~rtsp_reader();                               //hàm dọn dẹp tài nguyên
@@ -27,21 +25,12 @@ class rtsp_reader{
         bool init();                                  //hàm khởi tạo cho pipeline
         void run();                                   //hàm chạy pipeline
         
-        // ⚠️⚠️⚠️ TODO: TẠM ẨN UPLOAD FUNCTIONS - ENABLE LẠI KHI CẦN ⚠️⚠️⚠️
-        // bool init_pipeline_upload(const std::string& upload_url, int width, int height, int framerate);
-        // void push_frame_to_upload(int dma_fd, int width, int height);
-        
         // Cho phép set callback từ bên ngoài
         void setFrameCallback(FrameCallback cb) { frameCallback_ = cb; }
-        // ⚠️ TODO: TẠM ẨN UPLOAD CALLBACK - ENABLE LẠI KHI CẦN ⚠️
-        // void setUploadCallback(UploadCallback cb) { uploadCallback_ = cb; }
 
     private:
         static GstFlowReturn onNewSample(GstAppSink* appsink, gpointer user_data); // Callback static khi có sample mới
         static void onPadAdded(GstElement* src, GstPad* new_pad, gpointer data);   // Callback static khi rtspsrc tạo pad động
-        
-        // ⚠️ TODO: TẠM ẨN UPLOAD CALLBACK - ENABLE LẠI KHI CẦN ⚠️
-        // static void onUploadStateChanged(GObject* object, GParamSpec* pspec, gpointer user_data); // Monitor upload state
  
         std::string rtsp_url_;            //URL của thằng RTSP
         GstElement* pipeline_   = nullptr; // Pipeline tổng
@@ -53,9 +42,6 @@ class rtsp_reader{
         GstElement* sink_       = nullptr; // appsink
 
         FrameCallback frameCallback_;  // callback từ bên ngoài
-        
-        // ⚠️ TODO: TẠM ẨN UPLOAD CALLBACK MEMBER - ENABLE LẠI KHI CẦN ⚠️
-        // UploadCallback uploadCallback_;  // callback for upload pipeline
 
         size_t frame_count_ = 0;
         std::chrono::steady_clock::time_point last_fps_time_;
