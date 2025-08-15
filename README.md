@@ -22,7 +22,7 @@ Hệ thống xử lý video realtime với YOLOv8 trên Rockchip NPU, tối ưu 
 
 ---
 
-## 🔧 Tiến trình hiện tại (Giai đoạn 1)
+## Tiến trình hiện tại (Giai đoạn 1)
 
 ### **Pipeline Architecture**
 ```
