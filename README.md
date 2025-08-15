@@ -2,20 +2,20 @@
 
 Hệ thống xử lý video realtime với YOLOv8 trên Rockchip NPU, tối ưu hiệu năng với hardware acceleration.
 
-## 📋 Tổng quan tiến trình
+## Tổng quan tiến trình
 
-### **Giai đoạn 1: Video Input Pipeline** ✅ **(Hiện tại)**
+### **Giai đoạn 1: Video Input Pipeline** **(Hiện tại)**
 - **RTSP Stream Reception**: Nhận video từ camera IP qua RTSP protocol
 - **Hardware Decode**: Giải mã H.264 bằng Rockchip MPP (Media Process Platform)
 - **Format Conversion**: Chuyển đổi NV12 → RGB24 bằng RGA (Rockchip Graphics Acceleration)
 - **Zero-copy DMABuf**: Tối ưu hiệu năng với DMA buffer, giảm thiểu copy dữ liệu
 
-### **Giai đoạn 2: AI Inference Pipeline** 🚧 **(Chuẩn bị)*
+### **Giai đoạn 2: AI Inference Pipeline** **(Chuẩn bị)*
 - **Preprocess**: Resize, normalize, format conversion cho YOLOv8 input
 - **YOLOv8 Inference**: Chạy object detection trên Rockchip NPU
 - **Postprocess**: NMS, confidence filtering, bounding box calculation
 
-### **Giai đoạn 3: Output Pipeline** 🔮 **(Tương lai)**
+### **Giai đoạn 3: Output Pipeline** **(Tương lai)**
 - **Visualization**: Vẽ bounding box, labels với OpenGL
 - **Stream Output**: Truyền kết quả về server qua GStreamer
 - **Multi-threading**: Tối ưu pipeline với đa luồng
@@ -26,8 +26,7 @@ Hệ thống xử lý video realtime với YOLOv8 trên Rockchip NPU, tối ưu 
 
 ### **Pipeline Architecture**
 ```
-RTSP Camera → GStreamer → MPP Decoder → RGA Converter → RGB Output
-    📹         🔄          🎯           ⚡          📊
+RTSP Camera → GStreamer → MPP Decoder → RGA Converter → RGB Outpu
 ```
 
 ### **Các module đang hoạt động:**
@@ -66,7 +65,7 @@ RTSP Camera → GStreamer → MPP Decoder → RGA Converter → RGB Output
 
 ---
 
-## 🚀 Build & Run
+## Build & Run
 
 ### **Dependencies**
 ```bash
@@ -99,36 +98,36 @@ unset DISPLAY
 
 ---
 
-## 📁 Cấu trúc project
+## Cấu trúc project
 
 ```
 YoloV8_rknn/
 ├── main.cpp                    # Entry point và pipeline controller
 ├── src/
 │   ├── rtspProcess/
-│   │   ├── mpp_rtspProcess.cpp  # ✅ RTSP + MPP decode pipeline
+│   │   ├── mpp_rtspProcess.cpp  # RTSP + MPP decode pipeline
 │   │   ├── mpp_rtspProcess.h
-│   │   └── openGL_rtspProcess.* # 🚧 OpenGL rendering (inactive)
+│   │   └── openGL_rtspProcess.* # OpenGL rendering (inactive)
 │   ├── nv12_converter/
-│   │   ├── nv12_converter.cpp   # ✅ RGA hardware conversion
+│   │   ├── nv12_converter.cpp   # RGA hardware conversion
 │   │   └── nv12_converter.h
-│   ├── ThreadPool/              # 🔮 Multi-threading (future)
-│   └── Yolo8InitModel/          # 🔮 AI inference (future)
+│   ├── ThreadPool/              # Multi-threading (future)
+│   └── Yolo8InitModel/          # AI inference (future)
 ├── rknn_model/
 │   ├── yolov8.rknn             # YOLOv8 model for RKNN
 │   ├── labels.txt              # Object class labels
-│   └── rknpu2_yolo8.cpp        # 🚧 RKNN inference code
+│   └── rknpu2_yolo8.cpp        # RKNN inference code
 └── CMakeLists.txt              # Build configuration
 ```
 
 **Chú thích:**
-- ✅ **Active**: Module đang hoạt động
-- 🚧 **Ready**: Module đã code nhưng chưa integrate
-- 🔮 **Future**: Module dự kiến phát triển
+- **Active**: Module đang hoạt động
+- **Ready**: Module đã code nhưng chưa integrate
+- **Future**: Module dự kiến phát triển
 
 ---
 
-## 🔄 Log mẫu (Runtime)
+## Log mẫu (Runtime)
 
 ```
 [INFO] Pipeline đang chạy...
@@ -160,7 +159,7 @@ YoloV8_rknn/
 
 ---
 
-## 📊 Performance Notes
+## Performance Notes
 
 - **Optimal Resolution**: 1600x1200 hiện tại ổn định
 - **Hardware Acceleration**: Tận dụng tối đa VPU + RGA
@@ -169,7 +168,7 @@ YoloV8_rknn/
 
 ---
 
-## 🤝 Development Guidelines
+## Development Guidelines
 
 1. **Module Isolation**: Mỗi module độc lập, interface rõ ràng
 2. **Hardware First**: Ưu tiên sử dụng hardware acceleration
