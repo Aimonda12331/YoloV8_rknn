@@ -415,7 +415,7 @@ CMakeFiles/yolo8.dir/main.cpp.o: \
  /usr/include/gstreamer-1.0/gst/allocators/gstdmabuf.h \
  /usr/include/gstreamer-1.0/gst/allocators/gstfdmemory.h \
  /usr/include/gstreamer-1.0/gst/allocators/gstphysmemory.h \
- /home/orangepi/Documents/YoloV8_rknn/src/nv12_converter/nv12_converter.h \
+ /home/orangepi/Documents/YoloV8_rknn/src/nv12_converter_all_formats/nv12_converter_all_formats.h \
  /usr/include/c++/12/memory \
  /usr/include/c++/12/bits/stl_raw_storage_iter.h \
  /usr/include/c++/12/bits/align.h /usr/include/c++/12/bit \
@@ -447,5 +447,5 @@ CMakeFiles/yolo8.dir/main.cpp.o: \
  /usr/include/asm-generic/ioctls.h \
  /usr/include/aarch64-linux-gnu/bits/ioctl-types.h \
  /usr/include/aarch64-linux-gnu/sys/ttydefaults.h \
- /usr/include/rga/RgaApi.h /usr/include/rga/drmrga.h \
- /usr/include/rga/rga.h
+ /usr/include/c++/12/cstddef /usr/include/rga/RgaApi.h \
+ /usr/include/rga/drmrga.h /usr/include/rga/rga.h

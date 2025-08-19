@@ -29,8 +29,7 @@ endif()
 set(SRC
     main.cpp
     src/rtspProcess/mpp_rtspProcess.cpp
-    src/nv12_converter/nv12_converter.cpp
-    #src/rtspProcess/openGL_rtspProcess.cpp
+    src/nv12_converter_all_formats/nv12_converter_all_formats.cpp
     # src/ThreadPool/ThreadPool.cpp
     # src/Yolo8InitModel/Yolo8InitModel.cpp
 )

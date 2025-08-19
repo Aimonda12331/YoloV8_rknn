@@ -153,29 +153,29 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/yolo8.dir/build.make CMakeFiles/yolo8.dir/main.cpp.s
 .PHONY : main.cpp.s
 
-src/nv12_converter/nv12_converter.o: src/nv12_converter/nv12_converter.cpp.o
-.PHONY : src/nv12_converter/nv12_converter.o
+src/nv12_converter_all_formats/nv12_converter_all_formats.o: src/nv12_converter_all_formats/nv12_converter_all_formats.cpp.o
+.PHONY : src/nv12_converter_all_formats/nv12_converter_all_formats.o
 
 # target to build an object file
-src/nv12_converter/nv12_converter.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/yolo8.dir/build.make CMakeFiles/yolo8.dir/src/nv12_converter/nv12_converter.cpp.o
-.PHONY : src/nv12_converter/nv12_converter.cpp.o
+src/nv12_converter_all_formats/nv12_converter_all_formats.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/yolo8.dir/build.make CMakeFiles/yolo8.dir/src/nv12_converter_all_formats/nv12_converter_all_formats.cpp.o
+.PHONY : src/nv12_converter_all_formats/nv12_converter_all_formats.cpp.o
 
-src/nv12_converter/nv12_converter.i: src/nv12_converter/nv12_converter.cpp.i
-.PHONY : src/nv12_converter/nv12_converter.i
+src/nv12_converter_all_formats/nv12_converter_all_formats.i: src/nv12_converter_all_formats/nv12_converter_all_formats.cpp.i
+.PHONY : src/nv12_converter_all_formats/nv12_converter_all_formats.i
 
 # target to preprocess a source file
-src/nv12_converter/nv12_converter.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/yolo8.dir/build.make CMakeFiles/yolo8.dir/src/nv12_converter/nv12_converter.cpp.i
-.PHONY : src/nv12_converter/nv12_converter.cpp.i
+src/nv12_converter_all_formats/nv12_converter_all_formats.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/yolo8.dir/build.make CMakeFiles/yolo8.dir/src/nv12_converter_all_formats/nv12_converter_all_formats.cpp.i
+.PHONY : src/nv12_converter_all_formats/nv12_converter_all_formats.cpp.i
 
-src/nv12_converter/nv12_converter.s: src/nv12_converter/nv12_converter.cpp.s
-.PHONY : src/nv12_converter/nv12_converter.s
+src/nv12_converter_all_formats/nv12_converter_all_formats.s: src/nv12_converter_all_formats/nv12_converter_all_formats.cpp.s
+.PHONY : src/nv12_converter_all_formats/nv12_converter_all_formats.s
 
 # target to generate assembly for a file
-src/nv12_converter/nv12_converter.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/yolo8.dir/build.make CMakeFiles/yolo8.dir/src/nv12_converter/nv12_converter.cpp.s
-.PHONY : src/nv12_converter/nv12_converter.cpp.s
+src/nv12_converter_all_formats/nv12_converter_all_formats.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/yolo8.dir/build.make CMakeFiles/yolo8.dir/src/nv12_converter_all_formats/nv12_converter_all_formats.cpp.s
+.PHONY : src/nv12_converter_all_formats/nv12_converter_all_formats.cpp.s
 
 src/rtspProcess/mpp_rtspProcess.o: src/rtspProcess/mpp_rtspProcess.cpp.o
 .PHONY : src/rtspProcess/mpp_rtspProcess.o
@@ -213,9 +213,9 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
-	@echo "... src/nv12_converter/nv12_converter.o"
-	@echo "... src/nv12_converter/nv12_converter.i"
-	@echo "... src/nv12_converter/nv12_converter.s"
+	@echo "... src/nv12_converter_all_formats/nv12_converter_all_formats.o"
+	@echo "... src/nv12_converter_all_formats/nv12_converter_all_formats.i"
+	@echo "... src/nv12_converter_all_formats/nv12_converter_all_formats.s"
 	@echo "... src/rtspProcess/mpp_rtspProcess.o"
 	@echo "... src/rtspProcess/mpp_rtspProcess.i"
 	@echo "... src/rtspProcess/mpp_rtspProcess.s"

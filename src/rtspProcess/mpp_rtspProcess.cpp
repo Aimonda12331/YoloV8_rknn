@@ -1,6 +1,8 @@
 #include "mpp_rtspProcess.h"           // Header khai báo class rtsp_reader
 
 //==================== CONSTRUCTOR ====================//
+// Hàm khởi tạo class rtsp_reader.
+// Thiết lập URL RTSP, khởi tạo các biến pipeline và thông số FPS.
 rtsp_reader::rtsp_reader(const std::string& url)
     : rtsp_url_(url)
 {
@@ -15,6 +17,8 @@ rtsp_reader::rtsp_reader(const std::string& url)
 }
 
 //==================== DESTRUCTOR ====================//
+// Hàm hủy class rtsp_reader.
+// Đảm bảo giải phóng pipeline và các tài nguyên GStreamer khi đối tượng bị hủy.
 rtsp_reader::~rtsp_reader() {
     if (pipeline_) {
         gst_element_set_state(pipeline_, GST_STATE_NULL);
@@ -43,6 +47,9 @@ rtsp_reader::~rtsp_reader() {
   ! fpsdisplaysink video-sink=kmssink text-overlay=true sync=false
 
 //==================== INIT PIPELINE ====================//
+// Hàm khởi tạo pipeline GStreamer để nhận luồng RTSP, giải mã H264 và lấy frame NV12 DMABuf.
+// Tạo các element, cấu hình, gắn callback và nối pipeline.
+// Trả về true nếu thành công, false nếu lỗi.
 bool rtsp_reader::init() {
     // 1️⃣ Tạo pipeline và các element
     pipeline_ = gst_pipeline_new("rtsp-h264-pipeline"); // Pipeline tổng
@@ -91,6 +98,8 @@ bool rtsp_reader::init() {
 }
 
 //==================== RUN PIPELINE ====================//
+// Hàm chạy pipeline GStreamer (set PLAYING), lắng nghe các sự kiện lỗi/EOS.
+// Khi có lỗi hoặc kết thúc stream sẽ dừng pipeline.
 void rtsp_reader::run() {
     // 1️⃣ Bắt đầu pipeline
     gst_element_set_state(pipeline_, GST_STATE_PLAYING);  // Chuyển sang PLAYING
@@ -137,6 +146,8 @@ void rtsp_reader::run() {
 }
 
 //==================== CALLBACK: XỬ LÝ BUFFER ====================//
+// Callback static được gọi khi appsink có sample mới (frame mới).
+// Lấy thông tin frame, gọi callback xử lý frame (nếu có), đo FPS và thời gian xử lý.
 GstFlowReturn rtsp_reader::onNewSample(GstAppSink* appsink, gpointer user_data) {
     rtsp_reader* self = reinterpret_cast<rtsp_reader*>(user_data);
     auto frame_start = std::chrono::steady_clock::now();
@@ -191,6 +202,8 @@ GstFlowReturn rtsp_reader::onNewSample(GstAppSink* appsink, gpointer user_data) 
 }
 
 //==================== CALLBACK: XỬ LÝ PAD ĐỘNG ====================//
+// Callback static được gọi khi rtspsrc tạo pad động (luồng video mới).
+// Nối pad động từ rtspsrc vào depay để pipeline hoạt động đúng.
 void rtsp_reader::onPadAdded(GstElement* src, GstPad* new_pad, gpointer data) {
     GstElement* depay = static_cast<GstElement*>(data);       // Lấy depay từ user_data
     GstPad* sink_pad = gst_element_get_static_pad(depay, "sink"); // Lấy sink pad của depay

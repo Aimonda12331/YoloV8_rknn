@@ -97,32 +97,32 @@ CMakeFiles/yolo8.dir/src/rtspProcess/mpp_rtspProcess.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/yolo8.dir/src/rtspProcess/mpp_rtspProcess.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/orangepi/Documents/YoloV8_rknn/src/rtspProcess/mpp_rtspProcess.cpp -o CMakeFiles/yolo8.dir/src/rtspProcess/mpp_rtspProcess.cpp.s
 
-CMakeFiles/yolo8.dir/src/nv12_converter/nv12_converter.cpp.o: CMakeFiles/yolo8.dir/flags.make
-CMakeFiles/yolo8.dir/src/nv12_converter/nv12_converter.cpp.o: /home/orangepi/Documents/YoloV8_rknn/src/nv12_converter/nv12_converter.cpp
-CMakeFiles/yolo8.dir/src/nv12_converter/nv12_converter.cpp.o: CMakeFiles/yolo8.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/orangepi/Documents/YoloV8_rknn/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/yolo8.dir/src/nv12_converter/nv12_converter.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/yolo8.dir/src/nv12_converter/nv12_converter.cpp.o -MF CMakeFiles/yolo8.dir/src/nv12_converter/nv12_converter.cpp.o.d -o CMakeFiles/yolo8.dir/src/nv12_converter/nv12_converter.cpp.o -c /home/orangepi/Documents/YoloV8_rknn/src/nv12_converter/nv12_converter.cpp
+CMakeFiles/yolo8.dir/src/nv12_converter_all_formats/nv12_converter_all_formats.cpp.o: CMakeFiles/yolo8.dir/flags.make
+CMakeFiles/yolo8.dir/src/nv12_converter_all_formats/nv12_converter_all_formats.cpp.o: /home/orangepi/Documents/YoloV8_rknn/src/nv12_converter_all_formats/nv12_converter_all_formats.cpp
+CMakeFiles/yolo8.dir/src/nv12_converter_all_formats/nv12_converter_all_formats.cpp.o: CMakeFiles/yolo8.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/orangepi/Documents/YoloV8_rknn/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/yolo8.dir/src/nv12_converter_all_formats/nv12_converter_all_formats.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/yolo8.dir/src/nv12_converter_all_formats/nv12_converter_all_formats.cpp.o -MF CMakeFiles/yolo8.dir/src/nv12_converter_all_formats/nv12_converter_all_formats.cpp.o.d -o CMakeFiles/yolo8.dir/src/nv12_converter_all_formats/nv12_converter_all_formats.cpp.o -c /home/orangepi/Documents/YoloV8_rknn/src/nv12_converter_all_formats/nv12_converter_all_formats.cpp
 
-CMakeFiles/yolo8.dir/src/nv12_converter/nv12_converter.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/yolo8.dir/src/nv12_converter/nv12_converter.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/orangepi/Documents/YoloV8_rknn/src/nv12_converter/nv12_converter.cpp > CMakeFiles/yolo8.dir/src/nv12_converter/nv12_converter.cpp.i
+CMakeFiles/yolo8.dir/src/nv12_converter_all_formats/nv12_converter_all_formats.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/yolo8.dir/src/nv12_converter_all_formats/nv12_converter_all_formats.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/orangepi/Documents/YoloV8_rknn/src/nv12_converter_all_formats/nv12_converter_all_formats.cpp > CMakeFiles/yolo8.dir/src/nv12_converter_all_formats/nv12_converter_all_formats.cpp.i
 
-CMakeFiles/yolo8.dir/src/nv12_converter/nv12_converter.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/yolo8.dir/src/nv12_converter/nv12_converter.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/orangepi/Documents/YoloV8_rknn/src/nv12_converter/nv12_converter.cpp -o CMakeFiles/yolo8.dir/src/nv12_converter/nv12_converter.cpp.s
+CMakeFiles/yolo8.dir/src/nv12_converter_all_formats/nv12_converter_all_formats.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/yolo8.dir/src/nv12_converter_all_formats/nv12_converter_all_formats.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/orangepi/Documents/YoloV8_rknn/src/nv12_converter_all_formats/nv12_converter_all_formats.cpp -o CMakeFiles/yolo8.dir/src/nv12_converter_all_formats/nv12_converter_all_formats.cpp.s
 
 # Object files for target yolo8
 yolo8_OBJECTS = \
 "CMakeFiles/yolo8.dir/main.cpp.o" \
 "CMakeFiles/yolo8.dir/src/rtspProcess/mpp_rtspProcess.cpp.o" \
-"CMakeFiles/yolo8.dir/src/nv12_converter/nv12_converter.cpp.o"
+"CMakeFiles/yolo8.dir/src/nv12_converter_all_formats/nv12_converter_all_formats.cpp.o"
 
 # External object files for target yolo8
 yolo8_EXTERNAL_OBJECTS =
 
 yolo8: CMakeFiles/yolo8.dir/main.cpp.o
 yolo8: CMakeFiles/yolo8.dir/src/rtspProcess/mpp_rtspProcess.cpp.o
-yolo8: CMakeFiles/yolo8.dir/src/nv12_converter/nv12_converter.cpp.o
+yolo8: CMakeFiles/yolo8.dir/src/nv12_converter_all_formats/nv12_converter_all_formats.cpp.o
 yolo8: CMakeFiles/yolo8.dir/build.make
 yolo8: /usr/lib/aarch64-linux-gnu/libopencv_stitching.so.4.6.0
 yolo8: /usr/lib/aarch64-linux-gnu/libopencv_alphamat.so.4.6.0
