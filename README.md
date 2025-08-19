@@ -73,8 +73,7 @@ YoloV8_rknn/
 ```
 
 ---
-
-## 🛠 Upcoming Features
+🛠 Upcoming Features
 
 ### **Giai đoạn 2: AI Integration**
 - [ ] Integrate YOLOv8 inference với RKNN runtime
