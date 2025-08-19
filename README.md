@@ -1,4 +1,4 @@
-<!-- <!-- ===GHI CHÚ===
+ ===GHI CHÚ===
 Cài gstreamer libav (để có avdec_h264)
 Chạy lệnh sau để cài plugin giải mã phần mềm:
 
