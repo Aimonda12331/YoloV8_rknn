@@ -81,12 +81,12 @@ clean: CMakeFiles/yolo8.dir/clean
 CMakeFiles/yolo8.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/yolo8.dir/build.make CMakeFiles/yolo8.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/yolo8.dir/build.make CMakeFiles/yolo8.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/orangepi/Documents/YoloV8_rknn/build/CMakeFiles --progress-num=1,2,3,4,5 "Built target yolo8"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/orangepi/Documents/YoloV8_rknn/build/CMakeFiles --progress-num=1,2,3,4 "Built target yolo8"
 .PHONY : CMakeFiles/yolo8.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/yolo8.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/orangepi/Documents/YoloV8_rknn/build/CMakeFiles 5
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/orangepi/Documents/YoloV8_rknn/build/CMakeFiles 4
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/yolo8.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/orangepi/Documents/YoloV8_rknn/build/CMakeFiles 0
 .PHONY : CMakeFiles/yolo8.dir/rule
