@@ -1,228 +1,119 @@
-<!-- <!-- ===GHI CHÚ===
-Cài gstreamer libav (để có avdec_h264)
-Chạy lệnh sau để cài plugin giải mã phần mềm:
+ 
+# YOLOv8 RKNN - Video Processing Pipeline
 
+Hệ thống xử lý video realtime với YOLOv8 trên Rockchip NPU, tối ưu hiệu năng với hardware acceleration.
+
+## Tổng quan pipeline hiện tại
+
+- Nhận video từ camera IP qua RTSP (GStreamer)
+- Giải mã H.264 bằng Rockchip MPP (Media Process Platform)
+- Chuyển đổi NV12 sang nhiều định dạng (RGB24, BGR24, RGBA, BGRA, NV12, NV21, ...) bằng RGA (Rockchip Graphics Acceleration)
+- Tối ưu hiệu năng với zero-copy DMABuf
+- Chuẩn bị tích hợp AI inference (YOLOv8 trên RKNN)
+
+## Build & Run
+
+### Dependencies
+```bash
 sudo apt update
-sudo apt install gstreamer1.0-libav
+sudo apt install g++ cmake pkg-config
+sudo apt install gstreamer1.0-libav gstreamer1.0-plugins-* gstreamer1.0-tools
+sudo apt install librga-dev libmpp-dev libdrm-dev libgbm-dev libegl1-mesa-dev libgles2-mesa-dev
+sudo apt install libopencv-dev
+```
 
-===TIẾN TRÌNH===
-Bước 1. Khởi tạo camera (RTSPReader)
-        Khởi tạo mô hình yolov8.rknn (Yolo8InitModel) 
-Bước 2. Preprocess
-    Mục tiêu: 
-        Lấy hình từ RTSPReader
-        Resize ảnh về kích thước đầu vào model (ví dụ 640x640)
-        Chuyển màu BGR ➝ RGB
-        (Tùy do_preprocess): Normalize và hoán vị HWC → CHW
- -->
+### Build
+```bash
+mkdir build && cd build
+cmake ..
+make -j$(nproc)
+```
 
+### Run
+```bash
+unset DISPLAY # Nếu chạy headless
+./build/yolo8
+```
 
-ảnh lấy từ hệ thống có độ phân giải 1600x1200 dẫn đến CPU cao nên ép ảnh lại thành 640x480 --> áp dụng người
-#include "rtspReader.h"
-#include <iostream>
-#include <chrono>
+## Cấu trúc project
 
-RTSPReader::RTSPReader(const std::string& rtsp_URL)
-    : url(rtsp_URL), running(false), pipeline(nullptr), appsink(nullptr) {
-    gst_init(nullptr, nullptr);
-}
+```
+YoloV8_rknn/
+├── main.cpp                    # Entry point và pipeline controller
+├── src/
+│   ├── rtspProcess/
+│   │   ├── mpp_rtspProcess.cpp  # RTSP + MPP decode pipeline
+│   │   ├── mpp_rtspProcess.h
+│   ├── nv12_converter_all_formats/
+│   │   ├── nv12_converter_all_formats.cpp   # RGA hardware conversion, đa định dạng
+│   │   └── nv12_converter_all_formats.h
+│   ├── ThreadPool/              # Multi-threading (future)
+│   └── Yolo8InitModel/          # AI inference (future)
+├── rknn_model/
+│   ├── yolov8.rknn             # YOLOv8 model for RKNN
+│   ├── labels.txt              # Object class labels
+│   └── rknpu2_yolo8.cpp        # RKNN inference code
+└── CMakeLists.txt              # Build configuration
+```
 
-RTSPReader::~RTSPReader() {
-    stop();
-}
+## Hướng dẫn đổi định dạng đầu ra (NV12 → RGB/BGR/RGBA/...)
 
-void RTSPReader::stop() {
-    running = false;
-    if (readThread.joinable()) readThread.join();
+Bạn có thể chọn định dạng đầu ra mong muốn khi gọi hàm chuyển đổi trong code:
 
-    if (pipeline) {
-        gst_element_set_state(pipeline, GST_STATE_NULL);
-        gst_object_unref(pipeline);
-        pipeline = nullptr;
-    }
+```cpp
+int dst_format = RK_FORMAT_BGR_888; // hoặc RK_FORMAT_RGB_888, RK_FORMAT_RGBA_8888, ...
+converter->convertDMABufToAnyFormat(
+	dma_fd, width, height,
+	width, height,
+	dst_format,
+	&out_data, &out_size
+);
+```
 
-    if (appsink) {
-    gst_object_unref(appsink);
-    appsink = nullptr;
-}
+**Các định dạng phổ biến:**
+- `RK_FORMAT_RGB_888`   : Ảnh RGB 24-bit (3 bytes/pixel)
+- `RK_FORMAT_BGR_888`   : Ảnh BGR 24-bit (3 bytes/pixel)
+- `RK_FORMAT_RGBA_8888` : Ảnh RGBA 32-bit (4 bytes/pixel)
+- `RK_FORMAT_BGRA_8888` : Ảnh BGRA 32-bit (4 bytes/pixel)
+- `RK_FORMAT_YCbCr_420_SP` : NV12 (1 byte/pixel)
+- `RK_FORMAT_YCrCb_420_SP` : NV21 (1 byte/pixel)
 
-    cv::destroyAllWindows();
-}
+> **Lưu ý:** Định dạng hỗ trợ phụ thuộc vào driver RGA của thiết bị.
 
-bool RTSPReader::open() {
-    std::string pipelineStr =
-        "rtspsrc location=" + url + " latency=200 protocols=tcp ! "
-        "queue max-size-buffers=100 leaky=downstream ! " 
-        "rtph264depay ! " 
-        "queue ! " 
-        "h264parse config-interval=1 ! "
-        "queue max-size-buffers=100 leaky=downstream ! " //leaky=downstream
-        "mppvideodec ! "
-        "queue max-size-buffers=100 leaky=downstream ! "
-        "videoscale method=1 ! " 
-        "video/x-raw, format=NV12, width=640, height=480, memory=DMABuf ! "
-        "appsink name=mysink max-buffers=1 drop=true sync=false";
+## Log mẫu (Runtime)
 
-    GError* error = nullptr;
-    pipeline = gst_parse_launch(pipelineStr.c_str(), &error);
-    if (!pipeline) {
-        std::cerr << "[ERROR] Tạo pipeline thất bại: " << error->message << std::endl;
-        g_error_free(error);
-        return false;
-    }
+```
+[INFO] Pipeline đang chạy...
+[INFO] Pad RTSP nối thành công!
+[INFO] Nhận NV12 DMABUF fd=40 size=1600x1200
+[CALLBACK] Nhận NV12 DMABuf fd=40 size=1600x1200
+[DEBUG] Converting NV12(1600x1200) DMABuf fd=40 to RGB24 (RGA hardware)...
+[INFO] RGA hardware conversion thành công! Size: 5760000 bytes, Time: 4ms
+[SUCCESS] Converted to RGB! Size: 5760000 bytes
+[INFO] FPS = 25
+```
 
-    appsink = gst_bin_get_by_name(GST_BIN(pipeline), "mysink");
-    if (!appsink) {
-        std::cerr << "[ERROR] Không tìm thấy appsink.\n";
-        return false;
-    }
+## Roadmap & Upcoming Features
 
-    gst_app_sink_set_emit_signals(GST_APP_SINK(appsink), false);
-    gst_app_sink_set_drop(GST_APP_SINK(appsink), true);
-    gst_app_sink_set_max_buffers(GST_APP_SINK(appsink), 1);
+- [ ] Tích hợp YOLOv8 inference với RKNN runtime
+- [ ] Preprocess pipeline cho AI input
+- [ ] Postprocess và NMS filtering
+- [ ] OpenGL rendering với bounding box overlay
+- [ ] Multi-threading cho parallel processing
+- [ ] GStreamer output pipeline (stream to server)
+- [ ] Real-time performance monitoring
 
-    gst_element_set_state(pipeline, GST_STATE_PLAYING);
-    std::cout << "✅ RTSP kết nối thành công. DMA-BUF đang hoạt động.\n";
-    return true;
-}
+## Performance Notes
 
-// Dành cho AI xử lý: trả về DMA fd (zero-copy)
-int RTSPReader::getCurrentDmaFd() {
-    GstSample* sample = gst_app_sink_pull_sample(GST_APP_SINK(appsink));
-    if (!sample) return -1;
+- **Optimal Resolution**: 1600x1200 hiện tại ổn định
+- **Hardware Acceleration**: Tận dụng tối đa VPU + RGA
+- **Memory Efficiency**: Zero-copy DMABuf workflow
+- **Scalability**: Dễ dàng mở rộng cho AI và visualization
 
-    GstBuffer* buffer = gst_sample_get_buffer(sample);
-    if (!buffer) {
-        gst_sample_unref(sample);
-        return -1;
-    }
+## Development Guidelines
 
-    GstMemory* mem = gst_buffer_peek_memory(buffer, 0);
-    if (!gst_is_dmabuf_memory(mem)) {
-        std::cerr << "[ERROR] Memory không phải DMABuf.\n";
-        gst_sample_unref(sample);
-        return -1;
-    }
-
-    int fd = gst_dmabuf_memory_get_fd(mem);
-    gst_sample_unref(sample);
-    return fd;
-}
-
-// Dành cho hiển thị / debug
-cv::Mat RTSPReader::gstSampleToMat(GstSample* sample) {
-
-    GstBuffer* buffer = gst_sample_get_buffer(sample);
-    GstCaps* caps = gst_sample_get_caps(sample);
-    GstStructure* s = gst_caps_get_structure(caps, 0);
-
-    int width = 0, height = 0;
-    //int width, height;
-    gst_structure_get_int(s, "width", &width);
-    gst_structure_get_int(s, "height", &height);
-
-    GstMapInfo map;
-    // gst_buffer_map(buffer, &map, GST_MAP_READ);
-        if (!gst_buffer_map(buffer, &map, GST_MAP_READ)) {
-        std::cerr << "[ERROR] Không map buffer\n";
-        gst_sample_unref(sample);
-        return {};
-    }
-
-    size_t expectedSize = width * height * 3 / 2;
-    if (map.size < expectedSize) {
-        std::cerr << "[WARN] Kích thước buffer nhỏ hơn NV12 chuẩn\n";
-    }
-
-    cv::Mat yuv(height + height / 2, width, CV_8UC1, (uchar*)map.data);
-    cv::Mat bgr;
-    cv::cvtColor(yuv, bgr, cv::COLOR_YUV2BGR_NV12);
-
-      // Giải phóng buffer và sample
-    gst_buffer_unmap(buffer, &map);
-    gst_sample_unref(sample);
-
-    return bgr;
-}
-
-// Luồng xử lý nhận ảnh
-void RTSPReader::readThreadFunc() {
-    int frameCount = 0;
-    auto startTime = std::chrono::steady_clock::now();
-
-    while (running) {
-        GstSample *sample = gst_app_sink_pull_sample(GST_APP_SINK(appsink));
-        if (!sample) continue;
-
-        // 👉 Lấy thông tin trước khi chuyển thành Mat
-        GstCaps *caps = gst_sample_get_caps(sample);
-        GstStructure *s = gst_caps_get_structure(caps, 0);
-
-        int width = 0, height = 0;
-        const gchar* format = gst_structure_get_string(s, "format");
-        gst_structure_get_int(s, "width", &width);
-        gst_structure_get_int(s, "height", &height);
-
-        GstBuffer* buffer = gst_sample_get_buffer(sample);
-        GstClockTime pts = GST_BUFFER_PTS(buffer);
-        double time_sec = (pts != GST_CLOCK_TIME_NONE) ? (pts / 1e9) : -1;
-
-        std::cout << "[Frame] " 
-                  << "Định dạng ảnh=" << format 
-                  << " | Độ phân giải =" << width << "x" << height
-                  << " | PTS=" << time_sec << "s"
-                  << std::endl;
-
-        // 👉 Tiếp tục chuyển sample thành Mat
-        cv::Mat frame = gstSampleToMat(sample);
-
-        {
-            std::lock_guard<std::mutex> lock(frameMutex);
-            // currentFrame = frame.clone();  → bỏ .clone() nếu không dùng song song
-                currentFrame = std::move(frame);
-                frame.release();  // Giải phóng sớm
-        }
-
-        frameCount++;
-        auto now = std::chrono::steady_clock::now();
-        auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(now - startTime).count();
-        if (elapsed >= 1) {
-            std::cout << "[FPS] " << frameCount << " khung hình/giây" << std::endl;
-            frameCount = 0;
-            startTime = now;
-        }
-    }
-}
-
-// Hiển thị stream
-void RTSPReader::readStream() {
-    running = true;
-    readThread = std::thread(&RTSPReader::readThreadFunc, this);
-
-    while (running) {
-        cv::Mat frame;
-        {
-            std::lock_guard<std::mutex> lock(frameMutex);
-            if (currentFrame.empty()) continue;
-            //frame = currentFrame.clone();
-            frame = currentFrame;
-        }
-
-        cv::imshow("RTSP Stream", frame);
-        if (cv::waitKey(1) == 27) {
-            stop();
-            break;
-        }
-    }
-}
-
-// Lấy ảnh từ thread
-bool RTSPReader::getCurrentFrame(cv::Mat& outFrame) {
-    std::lock_guard<std::mutex> lock(frameMutex);
-    if (currentFrame.empty()) return false;
-
-    outFrame = currentFrame.clone(); // đảm bảo dữ liệu an toàn khi chia sẻ
-    return true;
-}
-
-max-buffer= không thấy tăng ram
+1. **Module Isolation**: Mỗi module độc lập, interface rõ ràng
+2. **Hardware First**: Ưu tiên sử dụng hardware acceleration
+3. **Zero-copy**: Tối ưu memory bandwidth với DMABuf
+4. **Error Handling**: Comprehensive error checking và logging
+5. **Documentation**: Comment code và update README theo tiến độ

@@ -153,77 +153,77 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/yolo8.dir/build.make CMakeFiles/yolo8.dir/main.cpp.s
 .PHONY : main.cpp.s
 
-src/ThreadPool/ThreadPool.o: src/ThreadPool/ThreadPool.cpp.o
-.PHONY : src/ThreadPool/ThreadPool.o
+src/MultiCameraManager/multi_thread.o: src/MultiCameraManager/multi_thread.cpp.o
+.PHONY : src/MultiCameraManager/multi_thread.o
 
 # target to build an object file
-src/ThreadPool/ThreadPool.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/yolo8.dir/build.make CMakeFiles/yolo8.dir/src/ThreadPool/ThreadPool.cpp.o
-.PHONY : src/ThreadPool/ThreadPool.cpp.o
+src/MultiCameraManager/multi_thread.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/yolo8.dir/build.make CMakeFiles/yolo8.dir/src/MultiCameraManager/multi_thread.cpp.o
+.PHONY : src/MultiCameraManager/multi_thread.cpp.o
 
-src/ThreadPool/ThreadPool.i: src/ThreadPool/ThreadPool.cpp.i
-.PHONY : src/ThreadPool/ThreadPool.i
+src/MultiCameraManager/multi_thread.i: src/MultiCameraManager/multi_thread.cpp.i
+.PHONY : src/MultiCameraManager/multi_thread.i
 
 # target to preprocess a source file
-src/ThreadPool/ThreadPool.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/yolo8.dir/build.make CMakeFiles/yolo8.dir/src/ThreadPool/ThreadPool.cpp.i
-.PHONY : src/ThreadPool/ThreadPool.cpp.i
+src/MultiCameraManager/multi_thread.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/yolo8.dir/build.make CMakeFiles/yolo8.dir/src/MultiCameraManager/multi_thread.cpp.i
+.PHONY : src/MultiCameraManager/multi_thread.cpp.i
 
-src/ThreadPool/ThreadPool.s: src/ThreadPool/ThreadPool.cpp.s
-.PHONY : src/ThreadPool/ThreadPool.s
+src/MultiCameraManager/multi_thread.s: src/MultiCameraManager/multi_thread.cpp.s
+.PHONY : src/MultiCameraManager/multi_thread.s
 
 # target to generate assembly for a file
-src/ThreadPool/ThreadPool.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/yolo8.dir/build.make CMakeFiles/yolo8.dir/src/ThreadPool/ThreadPool.cpp.s
-.PHONY : src/ThreadPool/ThreadPool.cpp.s
+src/MultiCameraManager/multi_thread.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/yolo8.dir/build.make CMakeFiles/yolo8.dir/src/MultiCameraManager/multi_thread.cpp.s
+.PHONY : src/MultiCameraManager/multi_thread.cpp.s
 
-src/Yolo8InitModel/Yolo8InitModel.o: src/Yolo8InitModel/Yolo8InitModel.cpp.o
-.PHONY : src/Yolo8InitModel/Yolo8InitModel.o
+src/nv12_converter_all_formats/nv12_converter_all_formats.o: src/nv12_converter_all_formats/nv12_converter_all_formats.cpp.o
+.PHONY : src/nv12_converter_all_formats/nv12_converter_all_formats.o
 
 # target to build an object file
-src/Yolo8InitModel/Yolo8InitModel.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/yolo8.dir/build.make CMakeFiles/yolo8.dir/src/Yolo8InitModel/Yolo8InitModel.cpp.o
-.PHONY : src/Yolo8InitModel/Yolo8InitModel.cpp.o
+src/nv12_converter_all_formats/nv12_converter_all_formats.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/yolo8.dir/build.make CMakeFiles/yolo8.dir/src/nv12_converter_all_formats/nv12_converter_all_formats.cpp.o
+.PHONY : src/nv12_converter_all_formats/nv12_converter_all_formats.cpp.o
 
-src/Yolo8InitModel/Yolo8InitModel.i: src/Yolo8InitModel/Yolo8InitModel.cpp.i
-.PHONY : src/Yolo8InitModel/Yolo8InitModel.i
+src/nv12_converter_all_formats/nv12_converter_all_formats.i: src/nv12_converter_all_formats/nv12_converter_all_formats.cpp.i
+.PHONY : src/nv12_converter_all_formats/nv12_converter_all_formats.i
 
 # target to preprocess a source file
-src/Yolo8InitModel/Yolo8InitModel.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/yolo8.dir/build.make CMakeFiles/yolo8.dir/src/Yolo8InitModel/Yolo8InitModel.cpp.i
-.PHONY : src/Yolo8InitModel/Yolo8InitModel.cpp.i
+src/nv12_converter_all_formats/nv12_converter_all_formats.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/yolo8.dir/build.make CMakeFiles/yolo8.dir/src/nv12_converter_all_formats/nv12_converter_all_formats.cpp.i
+.PHONY : src/nv12_converter_all_formats/nv12_converter_all_formats.cpp.i
 
-src/Yolo8InitModel/Yolo8InitModel.s: src/Yolo8InitModel/Yolo8InitModel.cpp.s
-.PHONY : src/Yolo8InitModel/Yolo8InitModel.s
+src/nv12_converter_all_formats/nv12_converter_all_formats.s: src/nv12_converter_all_formats/nv12_converter_all_formats.cpp.s
+.PHONY : src/nv12_converter_all_formats/nv12_converter_all_formats.s
 
 # target to generate assembly for a file
-src/Yolo8InitModel/Yolo8InitModel.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/yolo8.dir/build.make CMakeFiles/yolo8.dir/src/Yolo8InitModel/Yolo8InitModel.cpp.s
-.PHONY : src/Yolo8InitModel/Yolo8InitModel.cpp.s
+src/nv12_converter_all_formats/nv12_converter_all_formats.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/yolo8.dir/build.make CMakeFiles/yolo8.dir/src/nv12_converter_all_formats/nv12_converter_all_formats.cpp.s
+.PHONY : src/nv12_converter_all_formats/nv12_converter_all_formats.cpp.s
 
-src/rtspReader/rtspReader.o: src/rtspReader/rtspReader.cpp.o
-.PHONY : src/rtspReader/rtspReader.o
+src/rtspProcess/mpp_rtspProcess.o: src/rtspProcess/mpp_rtspProcess.cpp.o
+.PHONY : src/rtspProcess/mpp_rtspProcess.o
 
 # target to build an object file
-src/rtspReader/rtspReader.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/yolo8.dir/build.make CMakeFiles/yolo8.dir/src/rtspReader/rtspReader.cpp.o
-.PHONY : src/rtspReader/rtspReader.cpp.o
+src/rtspProcess/mpp_rtspProcess.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/yolo8.dir/build.make CMakeFiles/yolo8.dir/src/rtspProcess/mpp_rtspProcess.cpp.o
+.PHONY : src/rtspProcess/mpp_rtspProcess.cpp.o
 
-src/rtspReader/rtspReader.i: src/rtspReader/rtspReader.cpp.i
-.PHONY : src/rtspReader/rtspReader.i
+src/rtspProcess/mpp_rtspProcess.i: src/rtspProcess/mpp_rtspProcess.cpp.i
+.PHONY : src/rtspProcess/mpp_rtspProcess.i
 
 # target to preprocess a source file
-src/rtspReader/rtspReader.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/yolo8.dir/build.make CMakeFiles/yolo8.dir/src/rtspReader/rtspReader.cpp.i
-.PHONY : src/rtspReader/rtspReader.cpp.i
+src/rtspProcess/mpp_rtspProcess.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/yolo8.dir/build.make CMakeFiles/yolo8.dir/src/rtspProcess/mpp_rtspProcess.cpp.i
+.PHONY : src/rtspProcess/mpp_rtspProcess.cpp.i
 
-src/rtspReader/rtspReader.s: src/rtspReader/rtspReader.cpp.s
-.PHONY : src/rtspReader/rtspReader.s
+src/rtspProcess/mpp_rtspProcess.s: src/rtspProcess/mpp_rtspProcess.cpp.s
+.PHONY : src/rtspProcess/mpp_rtspProcess.s
 
 # target to generate assembly for a file
-src/rtspReader/rtspReader.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/yolo8.dir/build.make CMakeFiles/yolo8.dir/src/rtspReader/rtspReader.cpp.s
-.PHONY : src/rtspReader/rtspReader.cpp.s
+src/rtspProcess/mpp_rtspProcess.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/yolo8.dir/build.make CMakeFiles/yolo8.dir/src/rtspProcess/mpp_rtspProcess.cpp.s
+.PHONY : src/rtspProcess/mpp_rtspProcess.cpp.s
 
 # Help Target
 help:
@@ -237,15 +237,15 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
-	@echo "... src/ThreadPool/ThreadPool.o"
-	@echo "... src/ThreadPool/ThreadPool.i"
-	@echo "... src/ThreadPool/ThreadPool.s"
-	@echo "... src/Yolo8InitModel/Yolo8InitModel.o"
-	@echo "... src/Yolo8InitModel/Yolo8InitModel.i"
-	@echo "... src/Yolo8InitModel/Yolo8InitModel.s"
-	@echo "... src/rtspReader/rtspReader.o"
-	@echo "... src/rtspReader/rtspReader.i"
-	@echo "... src/rtspReader/rtspReader.s"
+	@echo "... src/MultiCameraManager/multi_thread.o"
+	@echo "... src/MultiCameraManager/multi_thread.i"
+	@echo "... src/MultiCameraManager/multi_thread.s"
+	@echo "... src/nv12_converter_all_formats/nv12_converter_all_formats.o"
+	@echo "... src/nv12_converter_all_formats/nv12_converter_all_formats.i"
+	@echo "... src/nv12_converter_all_formats/nv12_converter_all_formats.s"
+	@echo "... src/rtspProcess/mpp_rtspProcess.o"
+	@echo "... src/rtspProcess/mpp_rtspProcess.i"
+	@echo "... src/rtspProcess/mpp_rtspProcess.s"
 .PHONY : help
 
 

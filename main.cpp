@@ -1,38 +1,61 @@
 #include <iostream>
-#include <rtspReader/rtspReader.h>
-#include <Yolo8InitModel/Yolo8InitModel.h>
+#include <thread>
+#include <atomic>
+#include <chrono>
+#include <vector>
+#include <csignal>
 
-std::string yolov8_model_path = "./rknn_model/yolov8.rknn";
+#include <rtspProcess/mpp_rtspProcess.h>
+#include <nv12_converter_all_formats/nv12_converter_all_formats.h>
+#include <MultiCameraManager/multi_thread.h>
 
-void RTSP_begin(){
-                          
-    std::string rtsp_URL = "rtsp://103.147.186.175:8554/9L02DA3PAJ39B2F";
-    // std::string rtsp_URL = "rtsp://user03:abcd1234@113.177.126.84:8202";  // RTSP camera
-    RTSPReader reader(rtsp_URL);
+// Biến toàn cục để điều khiển dừng chương trình
+std::atomic<bool> keepRunning(true);
 
-    if (!reader.open()) {
-        std::cerr << "Lỗi kết nối RTSP!\n";
-        return; // <-- KHÔNG trả về giá trị
-    }
-    reader.readStream();  // Vào vòng lặp đọc và hiển thị
-    reader.stop();
-
-    std::cout << "Ket thuc chuong trình" << std::endl;
+// Hàm xử lý tín hiệu dừng (Ctrl+C)
+void signalHandler(int signum) {
+    keepRunning = false;
 }
 
-void init_model(){
-    RKNNModel model;
-    if(!model.loadModel(yolov8_model_path)){
-        std::cerr << "Tai yolov8 that bai!!!" << std::endl;
-        return;
-    }
-    rknn_context ctx = model.getContext();
+/**
+ * @brief Chạy đa luồng nhiều camera RTSP với MultiCameraManager
+ */
+void run_multi_camera() {
+    // Danh sách url rtsp của camera
+    std::vector<std::string> rtsp_urls = {
+        "rtsp://user03:abcd1234@113.177.126.84:8202",
+        "rtsp://103.147.186.175:18554/9L02DA3PAJ39B2F",
+        // "rtsp://103.147.186.175:18554/AA06E7CPAJ91031",
+        // "rtsp://103.147.186.175:18554/AA06E7CPAJCD058"
+        
+        // Thêm các camera khác nếu muốn
+    };
 
-    // TODO: rknn_inputs_set, rknn_run, postprocess...
+    // Khởi tạo MultiCameraManager và thêm các camera
+    MultiCameraManager manager;
+    for (const auto& url : rtsp_urls) {
+        manager.add_camera(url);
+    }
+
+    // Bắt đầu chạy đa luồng các camera
+    manager.start();
+
+    std::cout << "[INFO] Đang chạy đa luồng camera..." << std::endl;
+    while (keepRunning) {
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+    }
+
+    // Khi nhận tín hiệu dừng, sẽ dừng tất cả các camera
+    manager.stop();
+    std::cout << "[INFO] Chương trình kết thúc." << std::endl;
 }
 
 int main() {
-    RTSP_begin();
-    init_model();
-return 0; 
+    // Đăng ký handler cho Ctrl+C
+    std::signal(SIGINT, signalHandler);
+
+    // Chạy hệ thống đa camera
+    run_multi_camera();
+
+    return 0;
 }
